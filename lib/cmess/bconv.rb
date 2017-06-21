@@ -104,7 +104,7 @@ class CMess::BConv
         source = ENCODING
 
         input.each_byte { |char|
-          out.print(encode(map(char, charmap), source, target))
+          out.printf(encode(map(char, charmap), source, target))
         }
       end
     else
