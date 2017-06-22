@@ -95,7 +95,7 @@ class CMess::BConv
           charmap[map[source]] = map[target].pack('U*')
         }
 
-        input.each_byte { |char| out.print(map(char, charmap)) }
+        input.each_byte { |char| out.concat(map(char, charmap)) }
       else
         chartab.each { |code, map|
           charmap[map[source]] = [code.to_i(16)].pack('U*')
@@ -104,7 +104,7 @@ class CMess::BConv
         source = ENCODING
 
         input.each_byte { |char|
-          out.printf(encode(map(char, charmap), source, target))
+          out.send :print, encode(map(char, charmap), source, target)
         }
       end
     else
@@ -121,7 +121,7 @@ class CMess::BConv
           }
         }
       else
-        input.each { |line| out.print(encode(line, source, target)) }
+        input.each_line { |line| out.send :print, encode(line, source, target) }
       end
     end
   end
